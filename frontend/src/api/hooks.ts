@@ -23,6 +23,7 @@ import {
     fetchHTTPBasicAuthConfiguration,
     fetchKeyLockState,
     fetchLatestGitHubRelease,
+    fetchStatusLEDState,
     fetchManualControlProperties,
     fetchManualControlState,
     fetchMap,
@@ -66,6 +67,7 @@ import {
     sendHTTPBasicAuthConfiguration,
     sendJoinSegmentsCommand,
     sendKeyLockEnable,
+    sendStatusLEDEnable,
     sendLocateCommand,
     sendManualControlInteraction,
     sendMapReset,
@@ -151,6 +153,7 @@ enum CacheKey {
     Timers = "timers",
     TimerProperties = "timer_properties",
     ValetudoEvents = "valetudo_events",
+    StatusLED = "status_led",
     Log = "log",
     LogLevel = "log_level",
     KeyLockInformation = "key_lock",
@@ -878,6 +881,22 @@ export const useKeyLockStateMutation = () => {
         CacheKey.KeyLockInformation,
         (enable: boolean) => {
             return sendKeyLockEnable(enable).then(fetchKeyLockState);
+        }
+    );
+};
+
+export const useStatusLEDStateQuery = () => {
+    return useQuery(CacheKey.StatusLED, fetchStatusLEDState, {
+        staleTime: Infinity
+    });
+};
+
+export const useStatusLEDStateMutation = () => {
+    return useValetudoFetchingMutation(
+        useOnCommandError(Capability.StatusLEDControl),
+        CacheKey.StatusLED,
+        (enable: boolean) => {
+            return sendStatusLEDEnable(enable).then(fetchStatusLEDState);
         }
     );
 };
