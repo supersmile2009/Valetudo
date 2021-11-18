@@ -15,6 +15,8 @@ class RoborockS7ValetudoRobot extends RoborockGen4ValetudoRobot {
     constructor(options) {
         super(Object.assign({}, options, {waterGrades: WATER_GRADES}));
 
+        this.carpetAvoidanceModes = CARPET_AVOIDANCE_MODES;
+
         this.registerCapability(new capabilities.RoborockCombinedVirtualRestrictionsCapability({
             robot: this,
             supportedRestrictedZoneTypes: [
@@ -27,6 +29,13 @@ class RoborockS7ValetudoRobot extends RoborockGen4ValetudoRobot {
             robot: this,
             presets: Object.keys(this.waterGrades).map(k => {
                 return new entities.core.ValetudoSelectionPreset({name: k, value: this.waterGrades[k]});
+            })
+        }));
+
+        this.registerCapability(new capabilities.RoborockCarpetAvoidanceModeControlCapability({
+            robot: this,
+            presets: Object.keys(this.carpetAvoidanceModes).map(k => {
+                return new entities.core.ValetudoSelectionPreset({name: k, value: this.carpetAvoidanceModes[k]});
             })
         }));
 
@@ -57,6 +66,12 @@ const WATER_GRADES = {
     [entities.state.attributes.PresetSelectionStateAttribute.INTENSITY.LOW]: 201,
     [entities.state.attributes.PresetSelectionStateAttribute.INTENSITY.MEDIUM]: 202,
     [entities.state.attributes.PresetSelectionStateAttribute.INTENSITY.HIGH]: 203
+};
+
+const CARPET_AVOIDANCE_MODES = {
+    [entities.state.attributes.CarpetAvoidanceModeStateAttribute.MODE.AVOID] : 0,
+    [entities.state.attributes.CarpetAvoidanceModeStateAttribute.MODE.RAISE]: 1,
+    [entities.state.attributes.CarpetAvoidanceModeStateAttribute.MODE.IGNORE]: 2,
 };
 
 
