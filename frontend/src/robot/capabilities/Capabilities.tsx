@@ -7,9 +7,10 @@ import VoicePackManagement from "./VoicePackManagement";
 import DoNotDisturb from "./DoNotDisturb";
 import {CapabilityContainer} from "./CapabilityLayout";
 import Wifi from "./Wifi";
+import CarpetSettings from "./CarpetSettings";
 
 const Capabilities = (): JSX.Element => {
-    const components = [Switches, Speaker, VoicePackManagement, DoNotDisturb, Wifi, MapDataManagement];
+    const components = [Switches, CarpetSettings, Speaker, VoicePackManagement, DoNotDisturb, Wifi, MapDataManagement];
     return (
         <Container>
             <CapabilityContainer>

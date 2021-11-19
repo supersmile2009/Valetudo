@@ -40,6 +40,7 @@ const options = {
             {name: "LocateCapability", description: "Robot locate capability"},
             {name: "GoToLocationCapability", description: "Go-to location capability"},
             {name: "CarpetModeControlCapability", description: "Carpet mode settings capability"},
+            {name: "CarpetAvoidanceModeControlCapability", description: "Carpet avoidance mode control capability"},
             {name: "MapResetCapability", description: "Map reset capability"},
             {name: "MapSegmentEditCapability", description: "Map segment edit capability"},
             {name: "MapSegmentRenameCapability", description: "Map segment rename capability"},

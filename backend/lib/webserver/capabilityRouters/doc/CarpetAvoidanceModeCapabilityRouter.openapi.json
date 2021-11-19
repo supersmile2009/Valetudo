@@ -1,0 +1,101 @@
+{
+  "/api/v2/robot/capabilities/CarpetAvoidanceModeControlCapability/presets": {
+    "get": {
+      "tags": [
+        "CarpetAvoidanceModeControlCapability"
+      ],
+      "summary": "Get available presets",
+      "parameters": [],
+      "responses": {
+        "200": {
+          "description": "Ok",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/api/v2/robot/capabilities/CarpetAvoidanceModeControlCapability/preset": {
+    "get": {
+      "tags": [
+        "CarpetAvoidanceModeControlCapability"
+      ],
+      "summary": "Get carpet avoidance mode setting",
+      "responses": {
+        "200": {
+          "description": "Ok",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "put": {
+      "tags": [
+        "CarpetAvoidanceModeControlCapability"
+      ],
+      "summary": "Set preset value",
+      "parameters": [],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Preset name retrieved from the same capability"
+                }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "$ref": "#/components/responses/200"
+        },
+        "400": {
+          "$ref": "#/components/responses/400"
+        }
+      }
+    }
+  },
+  "/api/v2/robot/capabilities/CarpetAvoidanceModeControlCapability/properties": {
+    "get": {
+      "tags": [
+        "CarpetAvoidanceModeControlCapability"
+      ],
+      "summary": "Get various capability-related properties",
+      "responses": {
+        "200": {
+          "description": "Ok",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

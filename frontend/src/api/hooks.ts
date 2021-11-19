@@ -4,6 +4,7 @@ import React from "react";
 import {
     useMutation,
     UseMutationOptions,
+    QueryKey,
     useQuery,
     useQueryClient,
     UseQueryResult,
@@ -14,6 +15,7 @@ import {
     fetchAutoEmptyDockAutoEmptyControlState,
     fetchButtonLightsState,
     fetchCapabilities,
+    fetchCarpetAvoidanceModes,
     fetchCarpetModeState,
     fetchCombinedVirtualRestrictionsPropertiesProperties,
     fetchConsumableStateInformation,
@@ -38,6 +40,7 @@ import {
     fetchPresetSelections,
     fetchRobotInformation,
     fetchSegments,
+    fetchSelectedCarpetAvoidanceMode,
     fetchSpeakerVolumeState,
     fetchStateAttributes,
     fetchSystemHostInfo,
@@ -92,6 +95,7 @@ import {
     subscribeToLogMessages,
     subscribeToMap,
     subscribeToStateAttributes,
+    updateCarpetAvoidanceMode,
     updatePresetSelection,
     fetchValetudoInformation,
 } from "./client";
@@ -104,6 +108,7 @@ import {
 import { isAttribute } from "./utils";
 import {
     Capability,
+    CarpetAvoidanceMode,
     CombinedVirtualRestrictionsUpdateRequestParameters,
     ConsumableId,
     DoNotDisturbConfiguration,
@@ -132,6 +137,7 @@ enum CacheKey {
     Consumables = "consumables",
     Attributes = "attributes",
     PresetSelections = "preset_selections",
+    CurrentPresetSelection = "current_preset_selection",
     ZonePresets = "zone_presets",
     ZoneProperties = "zone_properties",
     Segments = "segments",
@@ -169,7 +175,7 @@ enum CacheKey {
     CombinedVirtualRestrictionsProperties = "combined_virtual_restrictions_properties",
     UpdaterState = "updater_state",
     CurrentStatistics = "current_statistics",
-    CurrentStatisticsProperties = "current_statistics_properties"
+    CurrentStatisticsProperties = "current_statistics_properties",
 }
 
 const useOnCommandError = (capability: Capability | string): ((error: unknown) => void) => {
@@ -335,6 +341,42 @@ export const usePresetSelectionMutation = (
                 });
             },
             onError,
+        }
+    );
+};
+
+export const useCurrentCarpetAvoidanceModeQuery = (): UseQueryResult<CarpetAvoidanceMode> => {
+    return useQuery(
+        [CacheKey.CurrentPresetSelection, Capability.CarpetAvoidanceModeControl],
+        () => {
+            return fetchSelectedCarpetAvoidanceMode();
+        },
+        {
+            staleTime: Infinity,
+        }
+    );
+};
+
+export const useCarpetAvoidanceModesQuery = () => {
+    return useQuery(
+        [CacheKey.PresetSelections, Capability.CarpetAvoidanceModeControl],
+        () => {
+            return fetchCarpetAvoidanceModes();
+        },
+        {
+            staleTime: Infinity,
+        }
+    );
+};
+
+export const useCarpetAvoidanceModeMutation = () => {
+    return useValetudoFetchingMutation(
+        useOnCommandError(Capability.CarpetAvoidanceModeControl),
+        [CacheKey.CurrentPresetSelection, Capability.CarpetAvoidanceModeControl],
+        (value: string) => {
+            return updateCarpetAvoidanceMode(value).then(() => {
+                return fetchSelectedCarpetAvoidanceMode();
+            });
         }
     );
 };
@@ -576,7 +618,7 @@ export const useConsumableStateQuery = () => {
     return useQuery(CacheKey.Consumables, fetchConsumableStateInformation);
 };
 
-const useValetudoFetchingMutation = <TData, TVariables>(onError: ((error: unknown) => void), cacheKey: CacheKey, mutationFn: MutationFunction<TData, TVariables>) => {
+const useValetudoFetchingMutation = <TData, TVariables>(onError: ((error: unknown) => void), cacheKey: QueryKey, mutationFn: MutationFunction<TData, TVariables>) => {
     const queryClient = useQueryClient();
 
     return useMutation(

@@ -41,6 +41,16 @@ class PresetSelectionCapability extends Capability {
     getType() {
         throw new NotImplementedError();
     }
+
+    /**
+     * @param {any} value
+     * @returns {import("../../entities/core/ValetudoSelectionPreset")}
+     */
+    findByValue(value) {
+        return this.presets.find(p => {
+            return p.value === value;
+        });
+    }
 }
 
 module.exports = PresetSelectionCapability;

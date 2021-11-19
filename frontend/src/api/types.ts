@@ -3,6 +3,7 @@ export enum Capability {
     AutoEmptyDockManualTrigger = "AutoEmptyDockManualTriggerCapability",
     BasicControl = "BasicControlCapability",
     ButtonLightsControl = "ButtonLightsControlCapability",
+    CarpetAvoidanceModeControl = "CarpetAvoidanceModeControlCapability",
     CarpetModeControl = "CarpetModeControlCapability",
     CombinedVirtualRestrictions = "CombinedVirtualRestrictionsCapability",
     ConsumableMonitoring = "ConsumableMonitoringCapability",
@@ -420,4 +421,8 @@ export interface ValetudoDataPoint {
 
 export interface StatisticsProperties {
     availableStatistics: Array<ValetudoDataPointType>
+}
+
+export interface CarpetAvoidanceMode {
+    value: "avoid" | "raise" | "ignore";
 }

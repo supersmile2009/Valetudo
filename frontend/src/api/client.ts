@@ -3,6 +3,7 @@ import { RawMapData } from "./RawMapData";
 import { PresetSelectionState, RobotAttribute } from "./RawRobotState";
 import {
     Capability,
+    CarpetAvoidanceMode,
     CombinedVirtualRestrictionsProperties,
     CombinedVirtualRestrictionsUpdateRequestParameters,
     ConsumableId,
@@ -156,6 +157,38 @@ export const updatePresetSelection = async (
     await valetudoAPI.put(`/robot/capabilities/${capability}/preset`, {
         name: level,
     });
+};
+
+export const fetchCarpetAvoidanceModes = async (): Promise<CarpetAvoidanceMode["value"][]> => {
+    return valetudoAPI
+        .get<CarpetAvoidanceMode["value"][]>(
+            `/robot/capabilities/${Capability.CarpetAvoidanceModeControl}/presets`
+        )
+        .then(({data}) => {
+            return data;
+        });
+};
+
+export const fetchSelectedCarpetAvoidanceMode = async (): Promise<CarpetAvoidanceMode> => {
+    return valetudoAPI
+        .get<CarpetAvoidanceMode>(`/robot/capabilities/${Capability.CarpetAvoidanceModeControl}/preset`)
+        .then(({data}) => {
+            return data;
+        });
+};
+
+export const updateCarpetAvoidanceMode = async (
+    value: string
+): Promise<void> => {
+    await valetudoAPI
+        .put(`/robot/capabilities/${Capability.CarpetAvoidanceModeControl}/preset`, {
+            name: value,
+        })
+        .then(({ status }) => {
+            if (status !== 200) {
+                throw new Error(`Could not change selection for ${Capability.CarpetAvoidanceModeControl}`);
+            }
+        });
 };
 
 export type BasicControlCommand = "start" | "stop" | "pause" | "home";

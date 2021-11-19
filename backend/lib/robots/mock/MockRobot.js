@@ -19,6 +19,7 @@ class MockRobot extends ValetudoRobot {
 
         this.registerCapability(new capabilities.MockBasicControlCapability({robot: this}));
         this.registerCapability(new capabilities.MockCarpetModeControlCapability({robot: this}));
+        this.registerCapability(new capabilities.MockCarpetAvoidanceModeControlCapability({robot: this}));
         this.registerCapability(new capabilities.MockConsumableMonitoringCapability({robot: this}));
         this.registerCapability(new capabilities.MockDoNotDisturbCapability({robot: this}));
         this.registerCapability(new capabilities.MockFanSpeedControlCapability({robot: this}));
