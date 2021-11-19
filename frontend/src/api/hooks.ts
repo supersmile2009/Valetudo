@@ -12,6 +12,7 @@ import {
     BasicControlCommand,
     deleteTimer,
     fetchAutoEmptyDockAutoEmptyControlState,
+    fetchButtonLightsState,
     fetchCapabilities,
     fetchCarpetModeState,
     fetchCombinedVirtualRestrictionsPropertiesProperties,
@@ -23,6 +24,7 @@ import {
     fetchHTTPBasicAuthConfiguration,
     fetchKeyLockState,
     fetchLatestGitHubRelease,
+    fetchStatusLEDState,
     fetchManualControlProperties,
     fetchManualControlState,
     fetchMap,
@@ -54,6 +56,7 @@ import {
     sendAutoEmptyDockAutoEmptyControlEnable,
     sendAutoEmptyDockManualTriggerCommand,
     sendBasicControlCommand,
+    sendButtonLightsEnable,
     sendCarpetModeEnable,
     sendCleanSegmentsCommand,
     sendCleanTemporaryZonesCommand,
@@ -66,6 +69,7 @@ import {
     sendHTTPBasicAuthConfiguration,
     sendJoinSegmentsCommand,
     sendKeyLockEnable,
+    sendStatusLEDEnable,
     sendLocateCommand,
     sendManualControlInteraction,
     sendMapReset,
@@ -151,6 +155,8 @@ enum CacheKey {
     Timers = "timers",
     TimerProperties = "timer_properties",
     ValetudoEvents = "valetudo_events",
+    StatusLED = "status_led",
+    ButtonLights = "button_lights",
     Log = "log",
     LogLevel = "log_level",
     KeyLockInformation = "key_lock",
@@ -878,6 +884,38 @@ export const useKeyLockStateMutation = () => {
         CacheKey.KeyLockInformation,
         (enable: boolean) => {
             return sendKeyLockEnable(enable).then(fetchKeyLockState);
+        }
+    );
+};
+
+export const useStatusLEDStateQuery = () => {
+    return useQuery(CacheKey.StatusLED, fetchStatusLEDState, {
+        staleTime: Infinity
+    });
+};
+
+export const useStatusLEDStateMutation = () => {
+    return useValetudoFetchingMutation(
+        useOnCommandError(Capability.StatusLEDControl),
+        CacheKey.StatusLED,
+        (enable: boolean) => {
+            return sendStatusLEDEnable(enable).then(fetchStatusLEDState);
+        }
+    );
+};
+
+export const useButtonLightsStateQuery = () => {
+    return useQuery(CacheKey.ButtonLights, fetchButtonLightsState, {
+        staleTime: Infinity
+    });
+};
+
+export const useButtonLightsStateMutation = () => {
+    return useValetudoFetchingMutation(
+        useOnCommandError(Capability.ButtonLightsControl),
+        CacheKey.ButtonLights,
+        (enable: boolean) => {
+            return sendButtonLightsEnable(enable).then(fetchButtonLightsState);
         }
     );
 };

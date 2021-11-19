@@ -1,5 +1,6 @@
 module.exports = {
     RoborockBasicControlCapability: require("./RoborockBasicControlCapability"),
+    RoborockButtonLightsControlCapability: require("./RoborockButtonLightsControlCapability"),
     RoborockCarpetModeControlCapability: require("./RoborockCarpetModeControlCapability"),
     RoborockCombinedVirtualRestrictionsCapability: require("./RoborockCombinedVirtualRestrictionsCapability"),
     RoborockConsumableMonitoringCapability: require("./RoborockConsumableMonitoringCapability"),
@@ -20,6 +21,7 @@ module.exports = {
     RoborockPersistentMapControlCapability: require("./RoborockPersistentMapControlCapability"),
     RoborockSpeakerTestCapability: require("./RoborockSpeakerTestCapability"),
     RoborockSpeakerVolumeControlCapability: require("./RoborockSpeakerVolumeControlCapability"),
+    RoborockStatusLEDControlCapability: require("./RoborockStatusLEDControlCapability"),
     RoborockTotalStatisticsCapability: require("./RoborockTotalStatisticsCapability"),
     RoborockVoicePackManagementCapability: require("./RoborockVoicePackManagementCapability"),
     RoborockWaterUsageControlCapability: require("./RoborockWaterUsageControlCapability"),

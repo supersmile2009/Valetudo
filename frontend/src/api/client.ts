@@ -671,6 +671,30 @@ export const sendKeyLockEnable = async (enable: boolean): Promise<void> => {
     await sendToggleMutation(Capability.KeyLock, enable);
 };
 
+export const fetchStatusLEDState = async (): Promise<SimpleToggleState> => {
+    return valetudoAPI
+        .get<SimpleToggleState>(`/robot/capabilities/${Capability.StatusLEDControl}`)
+        .then(({ data }) => {
+            return data;
+        });
+};
+
+export const sendStatusLEDEnable = async (enable: boolean): Promise<void> => {
+    await sendToggleMutation(Capability.StatusLEDControl, enable);
+};
+
+export const fetchButtonLightsState = async (): Promise<SimpleToggleState> => {
+    return valetudoAPI
+        .get<SimpleToggleState>(`/robot/capabilities/${Capability.ButtonLightsControl}`)
+        .then(({ data }) => {
+            return data;
+        });
+};
+
+export const sendButtonLightsEnable = async (enable: boolean): Promise<void> => {
+    await sendToggleMutation(Capability.ButtonLightsControl, enable);
+};
+
 export const fetchCarpetModeState = async (): Promise<SimpleToggleState> => {
     return valetudoAPI
         .get<SimpleToggleState>(`/robot/capabilities/${Capability.CarpetModeControl}`)

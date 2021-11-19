@@ -42,6 +42,7 @@ class RoborockS7ValetudoRobot extends RoborockGen4ValetudoRobot {
 
         [
             capabilities.RoborockKeyLockCapability,
+            capabilities.RoborockStatusLEDControlCapability,
         ].forEach(capability => {
             this.registerCapability(new capability({robot: this}));
         });
